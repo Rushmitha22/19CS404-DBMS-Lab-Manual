@@ -23,7 +23,7 @@ FlexiFit Gym wants a database to manage its members, trainers, and fitness progr
 
 ### ER Diagram:
  
-DBMS PROB 1.png
+<img src="https://img.sanishtech.com/u/9ba16662a96a8d5fb95524b7b489cd6d.png" alt="DBMS PROB 1" width="1382" height="895" loading="lazy" style="max-width:100%;height:auto;">
 
 
 ### Entities and Attributes
