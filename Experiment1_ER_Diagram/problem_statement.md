@@ -1,4 +1,6 @@
-# ER Diagram Workshop – Submission Template
+# EXPERIMENT 1 : ER Diagram Workshop – Submission Template
+## NAME :  RUSHMITHA  R
+## REGISTRATION NUMBER : 212224040281
 
 ## Objective
 To understand and apply ER modeling concepts by creating ER diagrams for real-world applications.
@@ -28,14 +30,14 @@ FlexiFit Gym wants a database to manage its members, trainers, and fitness progr
 
 ### Entities and Attributes
 
-| Entity | Attributes (PK, FK) | Notes |
-|--------|--------------------|-------|
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-
+| Entity    |          Attributes (PK, FK)                      |              Notes                 |
+|:-----------:|:---------------------------------------------------:|:------------------------------------:|
+| Member     | start date,member id,name,membership type| Stores the info of the members       |
+| Payment      | Amount, Date, Type                   | Stores all the payment details      |
+| Program       | Program_ID, Name, Category                   | Stores the details of the programs      |
+| Trainer       |  Trainer_ID, Name, Specialization                  | Stores the dteails of the trainer      |
+| Session      |   Session_Date, Time, Trainer_Name                 | Stores all the details of the sessions      |
+| Attendence   |  Date, Time, Status                            | Stores the attendence records of the members |
 ### Relationships and Constraints
 
 | Relationship | Cardinality | Participation | Notes |
