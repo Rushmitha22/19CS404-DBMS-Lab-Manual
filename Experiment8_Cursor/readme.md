@@ -331,54 +331,31 @@ The program should display employee names with their department numbers or the a
 
 **PL/SQL query:**
 ```
--- Enable DBMS output
-SET SERVEROUTPUT ON;
 
--- 1) Drop & recreate the employees table
-BEGIN
-  EXECUTE IMMEDIATE 'DROP TABLE employees';
-EXCEPTION
-  WHEN OTHERS THEN
-    NULL;  -- ignore if it doesn't exist
-END;
-
-
-CREATE TABLE employees (
-  emp_id      NUMBER PRIMARY KEY,
-  emp_name    VARCHAR2(100),
-  designation VARCHAR2(100),
-  salary      NUMBER
-);
-
--- 2) Insert a single row (so cursor can open)
-BEGIN
-  INSERT INTO employees VALUES (1, 'Alice', 'Manager', 6000);
-  COMMIT;
-END;
-/
-
--- 3) PL/SQL block with %ROWTYPE cursor and a forced divide-by-zero
 DECLARE
-  CURSOR c_emp IS
-    SELECT * FROM employees;
-  v_emp   c_emp%ROWTYPE;
-  v_dummy NUMBER;
+   CURSOR emp_cur IS SELECT * FROM employees;
+   emp_rec employees%ROWTYPE;
+   found BOOLEAN := FALSE;
 BEGIN
-  OPEN c_emp;
-    FETCH c_emp INTO v_emp;
-  CLOSE c_emp;
-
-  -- FORCE an unexpected error (division by zero)
-  v_dummy := v_emp.salary / 0;
-
-  -- (any normal display logic here would never be reached)
+   OPEN emp_cur;
+   LOOP
+      FETCH emp_cur INTO emp_rec;
+      EXIT WHEN emp_cur%NOTFOUND;
+      DBMS_OUTPUT.PUT_LINE('ID: ' || emp_rec.emp_id || ', Name: ' || emp_rec.emp_name ||
+                           ', Designation: ' || emp_rec.designation || ', Salary: ' || emp_rec.salary);
+      found := TRUE;
+   END LOOP;
+   CLOSE emp_cur;
+   IF NOT found THEN
+      RAISE NO_DATA_FOUND;
+   END IF;
 EXCEPTION
-  WHEN NO_DATA_FOUND THEN
-    DBMS_OUTPUT.PUT_LINE('No employee records found.');
-  WHEN OTHERS THEN
-    DBMS_OUTPUT.PUT_LINE('An unexpected error occurred.');
+   WHEN NO_DATA_FOUND THEN
+      DBMS_OUTPUT.PUT_LINE('No employee data found.');
+   WHEN OTHERS THEN
+      DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
 END;
-/
+
 ```
 **Required Output:**  
 The program should display employee records or the appropriate error message if no data is found.
